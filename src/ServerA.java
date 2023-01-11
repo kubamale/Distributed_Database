@@ -17,11 +17,11 @@ public class ServerA extends Thread {
     private String id;
     Socket clientSocket;
     private String answer;
-    private final Server parent;
+    private final DatabaseNode parent;
     private boolean isConnecting;
 
 
-    public ServerA(Map<String, List<Integer>> availblePorts, Map<String, String> values, Socket clientSocket, Map<String, List<Integer>> usedPorts, Server parent) {
+    public ServerA(Map<String, List<Integer>> availblePorts, Map<String, String> values, Socket clientSocket, Map<String, List<Integer>> usedPorts, DatabaseNode parent) {
         this.availblePorts = availblePorts;
         this.values = values;
         this.clientSocket = clientSocket;

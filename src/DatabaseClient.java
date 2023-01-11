@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
-public class Client {
+public class DatabaseClient {
 
     private static String openingFlag = "1000";
 

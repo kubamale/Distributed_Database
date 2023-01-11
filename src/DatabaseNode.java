@@ -1,16 +1,13 @@
-import com.sun.source.tree.SynchronizedTree;
-
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Server extends Thread {
+public class DatabaseNode extends Thread {
     private int PORT;
     private Map<String, String> values;
     private Map<String, List<Integer>> availblePorts;
@@ -21,7 +18,7 @@ public class Server extends Thread {
     private static Map<String, List<Integer>> usedPorts = new HashMap<>();
     private boolean canRun;
 
-    public Server(int PORT, Map<String, String> values, Map<String, List<Integer>> availblePorts) {
+    public DatabaseNode(int PORT, Map<String, String> values, Map<String, List<Integer>> availblePorts) {
         this.PORT = PORT;
         this.values = values;
         this.availblePorts = availblePorts;
@@ -125,8 +122,8 @@ public class Server extends Thread {
             System.out.println(key + " -> " + ports.get(key));
         }
 
-        Server server = new Server(port, passedValues, ports);
-        Thread thread = new Thread(server);
+        DatabaseNode databaseNode = new DatabaseNode(port, passedValues, ports);
+        Thread thread = new Thread(databaseNode);
         thread.start();
     }
 
