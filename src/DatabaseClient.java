@@ -10,6 +10,7 @@ public class DatabaseClient {
 
     public static void main(String[] args) throws IOException {
 
+
         String connectionData = args[1];
         String operation = "";
 
@@ -18,15 +19,13 @@ public class DatabaseClient {
         int serverPot = Integer.parseInt(splitConnectionData[1]);
 
 
-
-
         for (int i = 3; i < args.length; i++) {
             operation += args[i] + " ";
         }
 
         operation = operation.trim();
 
-
+        //Setting up Writer and Reader for server
         InetAddress IP = InetAddress.getByName(serverName);
         Socket clientSocket = new Socket(IP, serverPot);
         OutputStream os = clientSocket.getOutputStream();
@@ -36,30 +35,20 @@ public class DatabaseClient {
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime messageId = LocalDateTime.now();
 
+        //combine opening flag with message id
         openingFlag += ":" + messageId.toString().replace(':', '.');
 
-        writeToServer(bufferedWriter, openingFlag);
-        writeToServer(bufferedWriter, operation);
+        Functions.writeToServer(bufferedWriter, openingFlag);
+        Functions.writeToServer(bufferedWriter, operation);
 
         String answer = bufferedReader.readLine();
 
         System.out.println(answer);
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         clientSocket.close();
     }
 
-    private static void writeToServer (BufferedWriter bufferedWriter, String message) throws IOException {
-        bufferedWriter.write(message);
-        bufferedWriter.newLine();
-        bufferedWriter.flush();
-    }
+
 }
